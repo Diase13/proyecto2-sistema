@@ -14,8 +14,8 @@ const Entrenamiento = () => {
           <CardMedia
             component="img"
             height="140"
-            image="/static/images/cards/contemplative-reptile.jpg"
-            alt="green iguana"
+            image="/images/saque.jpg"
+            alt="saque"
           />
           <CardContent>
             <Box

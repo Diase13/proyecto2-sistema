@@ -15,6 +15,14 @@ import Home from '../pages/Home.tsx';
 import Jugadoras from '../pages/Jugadoras.tsx'
 import Entrenamiento from '../pages/Entrenamiento.tsx';
 import Challenge from '../pages/Challenge.tsx';
+import U10 from '../pages/plantilla/U10.tsx';
+import U11 from '../pages/plantilla/U11.tsx';
+import U12 from '../pages/plantilla/U12.tsx';
+import U13 from '../pages/plantilla/U13.tsx';
+import U15 from '../pages/plantilla/U15.tsx';
+import U17 from '../pages/plantilla/U17.tsx';
+import U19 from '../pages/plantilla/U19.tsx';
+import Sensor from '../pages/Sensor.tsx';
 //import Dashboard from './Dashboard';  // Importa tu componente Dashboard
 
 const NAVIGATION = [
@@ -91,11 +99,11 @@ const NAVIGATION = [
     title: 'Challenge',
     icon: <LayersIcon />,
   },
-  {
-    segment: 'jugadoras',
-    title: 'Plantilla',
-    icon: <LayersIcon />,
-  },
+  // {
+  //   segment: 'jugadoras',
+  //   title: 'Plantilla',
+  //   icon: <LayersIcon />,
+  // },
 ];
 
 const demoTheme = createTheme({
@@ -150,14 +158,19 @@ function DashboardLayoutBasic(props) {
 
   const demoWindow = window !== undefined ? window() : undefined;
 
-  // Mapa de rutas a componentes
   const routes = {
-    '/dashboard': <Home />,     // Componente Dashboard
-    '/jugadoras': <Jugadoras />,          // Componente Home para Plantilla
+    '/dashboard': <Home />, 
+    '/jugadoras': <Jugadoras />, 
     '/entrenamiento': <Entrenamiento />,
     '/challenge': <Challenge navigate={router.navigate}/>,
-    '/sensor': <Jugadoras />
-    // Puedes agregar más rutas si tienes más componentes
+    '/sensor': <Sensor />,
+    '/plantillas/u10': <U10 />,
+    '/plantillas/u11': <U11 />,
+    '/plantillas/u12': <U12 />,
+    '/plantillas/u13': <U13 />,
+    '/plantillas/u15': <U15 />,
+    '/plantillas/u17': <U17 />,
+    '/plantillas/u19': <U19 />
   };
 
   // Si la ruta existe en el objeto `routes`, renderiza el componente, si no, renderiza una página NotFound

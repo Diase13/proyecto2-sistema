@@ -9,6 +9,10 @@ import { Box, Grid } from "@mui/material";
 const Challenge = ({ navigate }) => { // Recibe navigate como prop
 
     const handleCardClick = () => {
+      navigate('/sensor'); // Redirige a la ruta deseada
+    };
+
+    const handleCardClickCam = () => {
       navigate('/jugadoras'); // Redirige a la ruta deseada
     };
 
@@ -26,7 +30,7 @@ const Challenge = ({ navigate }) => { // Recibe navigate como prop
               <CardMedia
                 component="img"
                 height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
+                image="/images/sensor.jpg"
                 alt="green iguana"
               />
               <CardContent>
@@ -52,12 +56,12 @@ const Challenge = ({ navigate }) => { // Recibe navigate como prop
           </Card>
         </Grid>
         <Grid item xs={8}>
-          <Card sx={{ maxWidth: 345 }}>
+          <Card sx={{ maxWidth: 345 }} onClick={handleCardClickCam}>
             <CardActionArea>
               <CardMedia
                 component="img"
                 height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
+                image="/images/camara.jpg"
                 alt="green iguana"
               />
               <CardContent>

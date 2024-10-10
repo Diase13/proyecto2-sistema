@@ -36,10 +36,10 @@ const rows = [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-const Jugadoras = () => {
+const U12 = () => {
   return (
     <div style={{padding: "10px"}}>
-        <h2>U10</h2>
+        <h2>U12</h2>
         <Paper sx={{ height: 400, width: '100%' }}>
         <DataGrid
             rows={rows}
@@ -54,4 +54,4 @@ const Jugadoras = () => {
   )
 };
 
-export default Jugadoras;
+export default U12;

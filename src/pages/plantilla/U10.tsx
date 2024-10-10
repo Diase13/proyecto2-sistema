@@ -36,7 +36,7 @@ const rows = [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-const Jugadoras = () => {
+const U10 = () => {
   return (
     <div style={{padding: "10px"}}>
         <h2>U10</h2>
@@ -54,4 +54,4 @@ const Jugadoras = () => {
   )
 };
 
-export default Jugadoras;
+export default U10;
