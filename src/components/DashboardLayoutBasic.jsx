@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { createTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
 import LayersIcon from '@mui/icons-material/Layers';
@@ -46,37 +45,37 @@ const NAVIGATION = [
     icon: <BarChartIcon />,
     children: [
       {
-        segment: 'sales',
+        segment: 'u10',
         title: 'U10',
         icon: <DescriptionIcon />,
       },
       {
-        segment: 'sales',
+        segment: 'u11',
         title: 'U11',
         icon: <DescriptionIcon />,
       },
       {
-        segment: 'traffic',
+        segment: 'u12',
         title: 'U12',
         icon: <DescriptionIcon />,
       },
       {
-        segment: 'sales',
+        segment: 'u13',
         title: 'U13',
         icon: <DescriptionIcon />,
       },
       {
-        segment: 'sales',
+        segment: 'u15',
         title: 'U15',
         icon: <DescriptionIcon />,
       },
       {
-        segment: 'sales',
+        segment: 'u17',
         title: 'U17',
         icon: <DescriptionIcon />,
       },
       {
-        segment: 'sales',
+        segment: 'u19',
         title: 'U19',
         icon: <DescriptionIcon />,
       },
