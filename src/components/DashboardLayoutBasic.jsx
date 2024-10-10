@@ -28,11 +28,11 @@ const NAVIGATION = [
     title: 'Dashboard',
     icon: <DashboardIcon />,
   },
-  {
-    segment: 'orders',
-    title: 'Orders',
-    icon: <ShoppingCartIcon />,
-  },
+  // {
+  //   segment: 'orders',
+  //   title: 'Orders',
+  //   icon: <ShoppingCartIcon />,
+  // },
   {
     kind: 'divider',
   },
@@ -41,18 +41,43 @@ const NAVIGATION = [
     title: 'Analytics',
   },
   {
-    segment: 'reports',
-    title: 'Reports',
+    segment: 'plantillas',
+    title: 'Plantilla',
     icon: <BarChartIcon />,
     children: [
       {
         segment: 'sales',
-        title: 'Sales',
+        title: 'U10',
+        icon: <DescriptionIcon />,
+      },
+      {
+        segment: 'sales',
+        title: 'U11',
         icon: <DescriptionIcon />,
       },
       {
         segment: 'traffic',
-        title: 'Traffic',
+        title: 'U12',
+        icon: <DescriptionIcon />,
+      },
+      {
+        segment: 'sales',
+        title: 'U13',
+        icon: <DescriptionIcon />,
+      },
+      {
+        segment: 'sales',
+        title: 'U15',
+        icon: <DescriptionIcon />,
+      },
+      {
+        segment: 'sales',
+        title: 'U17',
+        icon: <DescriptionIcon />,
+      },
+      {
+        segment: 'sales',
+        title: 'U19',
         icon: <DescriptionIcon />,
       },
     ],
@@ -128,7 +153,7 @@ function DashboardLayoutBasic(props) {
 
   // Mapa de rutas a componentes
   const routes = {
-    //'/dashboard': <Dashboard />,     // Componente Dashboard
+    '/dashboard': <Home />,     // Componente Dashboard
     '/jugadoras': <Jugadoras />,          // Componente Home para Plantilla
     '/entrenamiento': <Entrenamiento />,
     '/challenge': <Challenge navigate={router.navigate}/>,
