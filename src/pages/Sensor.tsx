@@ -9,6 +9,8 @@ import Stack from '@mui/material/Stack';
 const Sensor = () => {
   const [switchState, setSwitchState] = useState(false); // Estado del switch (On/Off)
   const [alert, setAlert] = useState<React.ReactElement | null>(null);
+  const [squareColor, setSquareColor] = useState('black'); // Estado para el color del cuadrado
+  const [intervalId, setIntervalId] = useState<number | null>(null); // Guardar el ID del intervalo
 
   const AntSwitch = styled(Switch)(({ theme }) => ({
     width: 40,
@@ -57,9 +59,27 @@ const Sensor = () => {
 
     // Mostrar la alerta correspondiente
     if (isChecked) {
-      setAlert(<Alert severity="success">Se prendio el Sensor</Alert>);
+      setAlert(<Alert severity="success">Se prendió el Sensor</Alert>);
+
+      // Iniciar el intervalo que cambia el color cada 5 minutos
+      const id = window.setInterval(() => {
+        // Cambiar a verde por 5 segundos y luego volver a negro
+        setSquareColor('green');
+        setTimeout(() => {
+          setSquareColor('black');
+        }, 3000);
+      }, 3000); // Cambiar a 3 segundos para pruebas (luego se puede cambiar a 300000 para 5 minutos)
+
+      setIntervalId(id); // Guardar el ID del intervalo
     } else {
-      setAlert(<Alert severity="warning">Se apago el Sensor</Alert>);
+      setAlert(<Alert severity="warning">Se apagó el Sensor</Alert>);
+
+      // Limpiar el intervalo si el switch se apaga
+      if (intervalId) {
+        window.clearInterval(intervalId);
+        setIntervalId(null);
+      }
+      setSquareColor('black'); // Asegurarse de que el cuadrado vuelva a negro
     }
 
     // Desaparecer la alerta después de 5 segundos
@@ -67,6 +87,15 @@ const Sensor = () => {
       setAlert(null);
     }, 5000);
   };
+
+  // Limpiar el intervalo cuando el componente se desmonte
+  useEffect(() => {
+    return () => {
+      if (intervalId) {
+        window.clearInterval(intervalId);
+      }
+    };
+  }, [intervalId]);
 
   return (
     <div style={{ padding: '10px' }}>
@@ -89,6 +118,17 @@ const Sensor = () => {
           <Typography>On</Typography>
         </Stack>
       </Box>
+
+      {/* Cuadrado que cambia de color */}
+      <Box
+        sx={{
+          marginTop: '20px',
+          width: '100px',
+          height: '100px',
+          backgroundColor: squareColor, // Cambiar el color basado en el estado
+          border: '2px solid black',
+        }}
+      />
 
       {/* Mostrar alerta si está presente */}
       {alert && (

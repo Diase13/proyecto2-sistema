@@ -6,10 +6,15 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import { Box } from "@mui/material";
 
-const Entrenamiento = () => {
+const Entrenamiento = ({ navigate }) => {
+
+  const handleCardClick = () => {
+    navigate('/saque'); // Redirige a la ruta deseada
+  };
+
   return (
-    <div style={{ padding: "10px" }}>
-      <Card sx={{ maxWidth: 345 }}>
+    <div style={{ padding: "50px" }}>
+      <Card sx={{ maxWidth: 345 }} onClick={handleCardClick}>
         <CardActionArea>
           <CardMedia
             component="img"

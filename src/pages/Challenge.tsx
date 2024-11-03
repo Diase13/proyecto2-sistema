@@ -13,7 +13,7 @@ const Challenge = ({ navigate }) => { // Recibe navigate como prop
     };
 
     const handleCardClickCam = () => {
-      navigate('/jugadoras'); // Redirige a la ruta deseada
+      navigate('/video'); // Redirige a la ruta deseada
     };
 
   return (

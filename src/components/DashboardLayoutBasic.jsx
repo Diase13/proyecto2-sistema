@@ -16,13 +16,9 @@ import Jugadoras from '../pages/Jugadoras.tsx'
 import Entrenamiento from '../pages/Entrenamiento.tsx';
 import Challenge from '../pages/Challenge.tsx';
 import U10 from '../pages/plantilla/U10.tsx';
-import U11 from '../pages/plantilla/U11.tsx';
-import U12 from '../pages/plantilla/U12.tsx';
-import U13 from '../pages/plantilla/U13.tsx';
-import U15 from '../pages/plantilla/U15.tsx';
-import U17 from '../pages/plantilla/U17.tsx';
-import U19 from '../pages/plantilla/U19.tsx';
 import Sensor from '../pages/Sensor.tsx';
+import Saque from '../pages/Saque.tsx';
+import Video from '../pages/Video.tsx';
 //import Dashboard from './Dashboard';  // Importa tu componente Dashboard
 
 const NAVIGATION = [
@@ -54,37 +50,7 @@ const NAVIGATION = [
     children: [
       {
         segment: 'u10',
-        title: 'U10',
-        icon: <DescriptionIcon />,
-      },
-      {
-        segment: 'u11',
-        title: 'U11',
-        icon: <DescriptionIcon />,
-      },
-      {
-        segment: 'u12',
-        title: 'U12',
-        icon: <DescriptionIcon />,
-      },
-      {
-        segment: 'u13',
-        title: 'U13',
-        icon: <DescriptionIcon />,
-      },
-      {
-        segment: 'u15',
-        title: 'U15',
-        icon: <DescriptionIcon />,
-      },
-      {
-        segment: 'u17',
-        title: 'U17',
-        icon: <DescriptionIcon />,
-      },
-      {
-        segment: 'u19',
-        title: 'U19',
+        title: 'Jugadoras',
         icon: <DescriptionIcon />,
       },
     ],
@@ -161,16 +127,12 @@ function DashboardLayoutBasic(props) {
   const routes = {
     '/dashboard': <Home />, 
     '/jugadoras': <Jugadoras />, 
-    '/entrenamiento': <Entrenamiento />,
+    '/entrenamiento': <Entrenamiento  navigate={router.navigate}/>,
     '/challenge': <Challenge navigate={router.navigate}/>,
+    '/saque' : <Saque />,
     '/sensor': <Sensor />,
-    '/plantillas/u10': <U10 />,
-    '/plantillas/u11': <U11 />,
-    '/plantillas/u12': <U12 />,
-    '/plantillas/u13': <U13 />,
-    '/plantillas/u15': <U15 />,
-    '/plantillas/u17': <U17 />,
-    '/plantillas/u19': <U19 />
+    '/video': <Video />,
+    '/plantillas/u10': <U10 />
   };
 
   // Si la ruta existe en el objeto `routes`, renderiza el componente, si no, renderiza una página NotFound
