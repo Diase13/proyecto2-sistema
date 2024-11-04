@@ -76,7 +76,7 @@ const demoTheme = createTheme({
   cssVariables: {
     colorSchemeSelector: 'data-toolpad-color-scheme',
   },
-  colorSchemes: { light: true, dark: true },
+  // colorSchemes: { light: true, dark: true },
   breakpoints: {
     values: {
       xs: 0,
@@ -136,7 +136,7 @@ function DashboardLayoutBasic(props) {
   };
 
   // Si la ruta existe en el objeto `routes`, renderiza el componente, si no, renderiza una página NotFound
-  const renderContent = routes[pathname] || <NotFound />;
+  const renderContent = routes[pathname] || <Home />;
 
   return (
     <AppProvider
@@ -144,6 +144,10 @@ function DashboardLayoutBasic(props) {
       router={router}
       theme={demoTheme}
       window={demoWindow}
+      branding={{
+        logo: <img src="/images/logo_usmp.png" alt="USMP logo" style={{ width: 120, height: 'auto' }}/>,
+        title: "",
+      }}
     >
       <DashboardLayout>
         {renderContent} {/* Aquí renderiza el componente dinámico */}
