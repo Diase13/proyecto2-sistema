@@ -1,123 +1,216 @@
 import React, { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import { Combobox, Option, ComboboxProps } from '@fluentui/react-combobox';
-import IconButton from "@mui/material/IconButton";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
+import {
+  Button,
+  Stack,
+  IconButton,
+  MenuItem,
+  FormControl,
+  Select,
+  InputLabel,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  SelectChangeEvent,
+} from "@mui/material";
 import SportsVolleyballIcon from "@mui/icons-material/SportsVolleyball";
 import axios from "axios";
 
-const Saque = () => {
-  const [tipo, setTipo] = React.useState("");
-  const [tipoSaque, setTipoSaque] = React.useState("");
-  const [ComboJugadoras, setComboJugadoras] = useState<string[]>([]);
-  const [selectedJugadora, setSelectedJugadora] = useState("");
+interface ComboItem {
+  tipoEntrenamientoID: number;
+  nombreDescripcion: string;
+}
 
-  const handleChange = (event) => {
+interface Entrenamiento {
+  entrnamientoEspecificoID: number;
+  nombre: string;
+  description: string;
+  tipoEntrenamientoID: number;
+  tipoEntrenamiento: null | string; // Puede ser null o algún tipo de valor adicional si la API lo tiene
+}
+
+const Saque = () => {
+  const [tipo, setTipo] = React.useState<string>("");
+  const [ComboJugadoras, setComboJugadoras] = useState<string[]>([]);
+  const [ComboNumero, setComboNumero] = useState<ComboItem[]>([]);
+  const [selectedJugadora, setSelectedJugadora] = useState<string>("");
+  const [selectedNumero, setSelectedNumero] = useState<string>("");
+  const [entrenamientos, setEntrenamientos] = useState<Entrenamiento[]>([]); // Cambio aquí para manejar una lista de entrenamientos
+
+  const handleChange = (event: SelectChangeEvent<string>) => {
     setTipo(event.target.value);
   };
 
-  const handleChangeSaque = (event) => {
-    setTipoSaque(event.target.value);
+  const handleChangeSaque = (event: SelectChangeEvent<string>) => {
+    setSelectedNumero(event.target.value);
   };
 
-  const handleChangeJugadoras = (event) => {
+  const handleChangeJugadoras = (event: SelectChangeEvent<string>) => {
     setSelectedJugadora(event.target.value);
   };
 
+  // useEffect para cargar ComboNumero (Nivel de Entrenamiento)
   useEffect(() => {
-    // Fetch the player names from the API
-    const fetchJugadorasNames = async () => {
+    const fetchEntrenamientoCombo = async () => {
       try {
-        const response = await axios.get(`http://localhost:5166/api/jugadoras/ComboJugadoras`);
-        setComboJugadoras(response.data);
+        const response = await axios.get(
+          `http://localhost:5166/api/tipoEntrenamiento/ComboEntrenamiento`
+        );
+        setComboNumero(response.data);
       } catch (error) {
-        console.error("Error fetching player names:", error);
+        console.error("Error fetching training data:", error);
       }
     };
-    fetchJugadorasNames();
+    fetchEntrenamientoCombo();
   }, []);
 
+  useEffect(() => {
+    const fetchJugadorasCombo = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5166/api/jugadoras/ComboJugadoras`
+        );
+        setComboJugadoras(response.data);
+      } catch (error) {
+        console.error("Error fetching training data:", error);
+      }
+    };
+    fetchJugadorasCombo();
+  }, []);
+
+  // useEffect para cargar los detalles de los entrenamientos específicos cuando el número cambie
+  useEffect(() => {
+    if (selectedNumero) {
+      const fetchEntrenamientoEspecifico = async () => {
+        try {
+          // Realiza la solicitud con el ID seleccionado
+          const response = await axios.get(
+            `http://localhost:5166/api/tipoEntrenamiento/BuscarEntrenamientoEspecifico/${selectedNumero}`
+          );
+          setEntrenamientos(response.data); // Guarda la lista de entrenamientos
+        } catch (error) {
+          console.error("Error fetching specific training data:", error);
+        }
+      };
+      fetchEntrenamientoEspecifico();
+    }
+  }, [selectedNumero]); // Dependencia: cada vez que selectedNumero cambie
+
   return (
-    <div style={{ padding: "100px"}}>
-      <Stack spacing={8} direction="row">
-        <div style={{ paddingTop: "15px" }}>Nivel de Entrenamiento:</div>
-        <FormControl style={{minWidth: 600}}>
-          <InputLabel id="demo-simple-select-label">Numero</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={tipoSaque}
-            label="Age"
-            onChange={handleChangeSaque}
-          >
-            <MenuItem value={10}>Basico - 5 Saques</MenuItem>
-            <MenuItem value={20}>Intermedio - 15 Saques</MenuItem>
-            <MenuItem value={20}>Avanzado - 25 saques</MenuItem>
-          </Select>
-        </FormControl>
-      </Stack>
-      <br />
-      <Stack spacing={8} direction="row">
-        <div style={{ paddingTop: "15px" }}>Numero de Saque</div>
-        <Stack direction="row" spacing={1}>
-          <IconButton aria-label="delete">
-            <SportsVolleyballIcon />
-          </IconButton>
-          <IconButton aria-label="delete">
-            <SportsVolleyballIcon />
-          </IconButton>
-          <IconButton aria-label="delete">
-            <SportsVolleyballIcon />
-          </IconButton>
-          <IconButton aria-label="delete">
-            <SportsVolleyballIcon />
-          </IconButton>
-        </Stack>
-        <Button>Encender Sensor</Button>
-      </Stack>
-      <br />
-      <Stack spacing={8} direction="row">
-        <div style={{ paddingTop: "15px" }}>El sensor detecta: </div>
-        <FormControl style={{minWidth: 200}}>
-          <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={tipo}
-            label="Age"
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>Afuera</MenuItem>
-            <MenuItem value={20}>Dentro</MenuItem>
-          </Select>
-        </FormControl>
-      </Stack>
-      <br/>
-      <Stack spacing={8} direction="row">
-        <div style={{ paddingTop: "15px" }}>Jugadora:</div>
-        <FormControl style={{minWidth: 600}}>
-          <InputLabel id="jugadora-select-label">Jugadora</InputLabel>
-          <Select
-            labelId="jugadora-select-label"
-            id="jugadora-select"
-            value={selectedJugadora}
-            label="Jugadora"
-            onChange={handleChangeJugadoras}
-          >
-            {ComboJugadoras.map((name) => (
-              <MenuItem key={name} value={name}>
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Button>Guardar Entrenamiento</Button>
-      </Stack>
+    <div style={{ padding: "100px" }}>
+      <Grid container spacing={2}>
+        {/* Columna Izquierda */}
+        <Grid item xs={12} md={6}>
+          <Stack spacing={4} direction="column">
+            <Stack spacing={2} direction="column">
+              <Typography variant="body1" style={{ paddingTop: "15px" }}>
+                Nivel de exigencia en el Entrenamiento:
+              </Typography>
+              <FormControl style={{ minWidth: 450 }}>
+                <InputLabel id="jugadora-select-label">Número</InputLabel>
+                <Select
+                  labelId="jugadora-select-label"
+                  id="demo-simple-select"
+                  value={selectedNumero}
+                  label="Nivel de Entrenamiento"
+                  onChange={handleChangeSaque}
+                >
+                  {ComboNumero.map((item) => (
+                    <MenuItem
+                      key={item.tipoEntrenamientoID}
+                      value={item.tipoEntrenamientoID.toString()} // Convertir a string
+                    >
+                      {item.nombreDescripcion}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Stack>
+
+            <Stack spacing={2} direction="column">
+              <Typography variant="body1" style={{ paddingTop: "15px" }}>
+                Número de Saque
+              </Typography>
+              <Stack direction="row" spacing={1}>
+                <IconButton aria-label="delete">
+                  <SportsVolleyballIcon />
+                </IconButton>
+                <IconButton aria-label="delete">
+                  <SportsVolleyballIcon />
+                </IconButton>
+                <IconButton aria-label="delete">
+                  <SportsVolleyballIcon />
+                </IconButton>
+                <IconButton aria-label="delete">
+                  <SportsVolleyballIcon />
+                </IconButton>
+              </Stack>
+            </Stack>
+
+            <Stack spacing={2} direction="column">
+              <Typography variant="body1" style={{ paddingTop: "15px" }}>
+                El sensor detecta:
+              </Typography>
+              <FormControl style={{ minWidth: 200 }}>
+                <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={tipo}
+                  label="Tipo"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="10">Afuera</MenuItem>
+                  <MenuItem value="20">Dentro</MenuItem>
+                </Select>
+              </FormControl>
+            </Stack>
+
+            <Stack spacing={2} direction="column">
+              <Typography variant="body1" style={{ paddingTop: "15px" }}>
+                Jugadora:
+              </Typography>
+              <FormControl style={{ minWidth: 600 }}>
+                <InputLabel id="jugadora-select-label">Jugadora</InputLabel>
+                <Select
+                  labelId="jugadora-select-label"
+                  id="jugadora-select"
+                  value={selectedJugadora}
+                  label="Jugadora"
+                  onChange={handleChangeJugadoras}
+                >
+                  {ComboJugadoras.map((name) => (
+                    <MenuItem key={name} value={name}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Button>Guardar Entrenamiento</Button>
+            </Stack>
+          </Stack>
+        </Grid>
+
+        {/* Columna Derecha - Card que se muestra al seleccionar un Nivel de Entrenamiento */}
+        <Grid item xs={12} md={6}>
+          {selectedNumero && entrenamientos.length > 0 && (
+            <Card variant="outlined">
+              <CardContent>
+                <Typography variant="h6">Detalles del Entrenamiento:</Typography>
+                {entrenamientos.map((entrenamiento) => (
+                  <div key={entrenamiento.entrnamientoEspecificoID}>
+                    <Typography variant="body1">Nombre: {entrenamiento.nombre}</Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      Descripción: {entrenamiento.description}
+                    </Typography>
+                    <hr />
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+        </Grid>
+      </Grid>
     </div>
   );
 };
